@@ -17,6 +17,13 @@ namespace WebApplication.Data
         }
         
         public virtual ICollection<UserPermission> UserPermissions { get; set; }
+        public virtual ICollection<UserLoginHistory> UserLoginHistories { get; set; }
+
+        public virtual Task UpdateUserHistories(UserLoginHistory item)
+        {            
+            this.UserLoginHistories.Add(item);
+            return Task.FromResult(0);
+        }
 
     }
 }

@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-WebApplication-7be41221-9590-49c5-9e67-cb719ca99504",
 
   "dependencies": {
@@ -46,8 +46,8 @@
     },
     "Microsoft.AspNetCore.Session": "1.0.0",
     "Microsoft.Extensions.Caching.SqlServer": "1.0.0",
-    "cloudscribe.Web.Pagination": "1.0.4"
-
+    "cloudscribe.Web.Pagination": "1.0.4",
+    "Microsoft.AspNetCore.Authentication.Google": "1.0.0"
   },
 
   "tools": {

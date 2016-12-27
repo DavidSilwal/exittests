@@ -97,10 +97,7 @@ namespace WebApplication.Data
                     .IsRequired();
                 entity.ToTable("Permissions");
             });
-
-
-
-
+            
             builder.Entity<RolePermission>(entity =>
             {
                 entity.HasKey(e => new { e.RoleId, e.PermissionId });
@@ -120,13 +117,23 @@ namespace WebApplication.Data
                 entity.HasOne(d => d.User).WithMany(p => p.UserPermissions).HasForeignKey(d => d.UserId);
                 entity.ToTable("UserPermissions");
             });
+
+            builder.Entity<UserLoginHistory>(entity =>
+            {
+                entity.HasKey(e => new { e.UserID, e.UserLoginHistoryID });
+
+                entity.HasOne(u => u.User).WithMany(l=>l.UserLoginHistories).HasForeignKey(d=>d.UserID);
+                entity.ToTable("UserLoginHistories");
+            });
+           
         }
         
         public virtual new DbSet<Role> Roles { get; set; }
         public virtual new DbSet<User> Users { get; set; }
 
-        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<UserLoginHistory> UserLoginHistories { get; set; }
 
+        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<UserPermission> UserPermissions { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
     }
