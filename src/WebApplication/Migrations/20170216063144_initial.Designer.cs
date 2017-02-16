@@ -8,13 +8,13 @@ using WebApplication.Data;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161227152125_userhistory")]
-    partial class userhistory
+    [Migration("20170216063144_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.1")
+                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>", b =>
@@ -56,10 +56,10 @@ namespace WebApplication.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasAnnotation("MaxLength", 450);
+                        .HasMaxLength(450);
 
                     b.Property<string>("ProviderKey")
-                        .HasAnnotation("MaxLength", 450);
+                        .HasMaxLength(450);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -81,8 +81,6 @@ namespace WebApplication.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UserRoles");
                 });
@@ -113,11 +111,11 @@ namespace WebApplication.Migrations
 
                     b.Property<string>("Group")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 100);
+                        .HasMaxLength(100);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 100);
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -137,14 +135,15 @@ namespace WebApplication.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<string>("Name")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("Roles");
@@ -160,8 +159,6 @@ namespace WebApplication.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("RolePermissions");
                 });
 
@@ -176,7 +173,7 @@ namespace WebApplication.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<string>("Email")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
@@ -185,10 +182,10 @@ namespace WebApplication.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
 
@@ -201,7 +198,7 @@ namespace WebApplication.Migrations
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -231,8 +228,6 @@ namespace WebApplication.Migrations
 
                     b.HasKey("UserID", "UserLoginHistoryID");
 
-                    b.HasIndex("UserID");
-
                     b.ToTable("UserLoginHistories");
                 });
 
@@ -245,8 +240,6 @@ namespace WebApplication.Migrations
                     b.HasKey("UserId", "PermissionId");
 
                     b.HasIndex("PermissionId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UserPermissions");
                 });

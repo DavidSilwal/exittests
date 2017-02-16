@@ -190,6 +190,28 @@ namespace WebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserLoginHistories",
+                columns: table => new
+                {
+                    UserID = table.Column<int>(nullable: false),
+                    UserLoginHistoryID = table.Column<string>(nullable: false),
+                    Browser = table.Column<string>(nullable: true),
+                    IpAddress = table.Column<string>(nullable: true),
+                    LastActivity = table.Column<DateTime>(nullable: false),
+                    TimeStamp = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLoginHistories", x => new { x.UserID, x.UserLoginHistoryID });
+                    table.ForeignKey(
+                        name: "FK_UserLoginHistories_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserPermissions",
                 columns: table => new
                 {
@@ -234,11 +256,6 @@ namespace WebApplication.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_UserId",
-                table: "UserRoles",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "UK_Permission",
                 table: "Permissions",
                 column: "Name",
@@ -247,17 +264,13 @@ namespace WebApplication.Migrations
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "Roles",
-                column: "NormalizedName");
+                column: "NormalizedName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolePermissions_PermissionId",
                 table: "RolePermissions",
                 column: "PermissionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RolePermissions_RoleId",
-                table: "RolePermissions",
-                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -274,11 +287,6 @@ namespace WebApplication.Migrations
                 name: "IX_UserPermissions_PermissionId",
                 table: "UserPermissions",
                 column: "PermissionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserPermissions_UserId",
-                table: "UserPermissions",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -300,6 +308,9 @@ namespace WebApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "RolePermissions");
+
+            migrationBuilder.DropTable(
+                name: "UserLoginHistories");
 
             migrationBuilder.DropTable(
                 name: "UserPermissions");
